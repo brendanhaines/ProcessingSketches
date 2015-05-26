@@ -1,5 +1,7 @@
 final int BACKGROUND_COLOR = 10;
+final int WALL_COLOR = 0xCCCCCC;
 final int PACMAN_SPEED = 2;
+final int GHOST_SPEED = 1;
 
 boolean running = false;
 boolean paused = false;
@@ -11,15 +13,29 @@ int yVel = 0;
 
 float startT, stopT;
 
+void setup() {
+  size( 640, 480 );
+  background( BACKGROUND_COLOR );
+  fill( 200 );
+  noStroke();
+  rect( 210, 192, 210, 96);
+  textSize( 32 );
+  fill( 255, 0, 0 );
+  text( "START", 260, 250 );
+}
+
 void mouseClicked() {
   if( !running ) {
-    running = true;
     startNew();
   }
 }
 
 void keyPressed() {
-  if( !running ) return;
+  if( !running && key != ' ' ) return;
+  if( !running && key == ' ' ) {
+    startNew();
+    return;
+  }
   if( key == ' ' || key == 'p' || key == 'P' ) {
     if( paused ) {
       paused = false;
@@ -51,6 +67,7 @@ void keyPressed() {
 }
 
 void startNew() {
+  running = true;
   paused = false;
   background( BACKGROUND_COLOR );
   xPos = 320;
@@ -78,24 +95,20 @@ boolean checkAlive() {
   return true;
 }
 
-void setup() {
-  size( 640, 480 );
-  background( BACKGROUND_COLOR );
-  fill( 200 );
-  noStroke();
-  rect( 210, 192, 210, 96);
-  textSize( 32 );
-  fill( 255, 0, 0 );
-  text( "START", 260, 250 ); 
-}
-
 void draw() {
   if( running && !paused ) {
-    xPos += xVel;
-    yPos += yVel;
     background( BACKGROUND_COLOR );
     
-    if( !checkAlive() ) endGame();
+    // DRAW MAP
+    // to be implemented later
+    fill( (WALL_COLOR >> 16) & 0xFF, (WALL_COLOR >> 8) & 0xFF, WALL_COLOR & 0xFF );
+    rect( 370, 10, 10, 460 );
+
+    // CHECK IF PACMAN CAN MOVE
+    if( (get( xPos + xVel, yPos + yVel ) & 0xFFFFFF) != WALL_COLOR ) {
+      xPos += xVel;
+      yPos += yVel;
+    }
     
     // DRAW PACMAN
     fill( 255, 255, 51 );
@@ -117,5 +130,10 @@ void draw() {
     }
     arc( xPos, yPos, 20, 20, startT, stopT, PIE );
     // DONE DRAWING PACMAN
+
+    // DRAW GHOSTS
+    // to be implemented later
+
+    if( !checkAlive() ) endGame();
   }
 }
