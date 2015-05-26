@@ -1,5 +1,10 @@
 import javax.swing.*;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// PLEASE NOTE: FOR THIS GAME TO FUNCTION CORRECTLY, YOU MUST PLAY THIS VIDEO IN THE BACKGROUND:  //
+// https://www.youtube.com/watch?v=npOpr7juN1Y                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 final int BACKGROUND_COLOR = 10;
 final int WALL_COLOR = 0xCCCCCC;
 final int PACMAN_SPEED = 2;
@@ -40,6 +45,7 @@ void setup() {
   fill( 255, 0, 0 );
   text( "START", 260, 250 );
 
+  options.setBounds( 700, 50, 10, 10 );
   options.getContentPane().setLayout( new BoxLayout( options.getContentPane(), BoxLayout.Y_AXIS ) );
   options.setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
   redGhost.setSelected( true );
